@@ -7,9 +7,7 @@ module Stance
 
       def event(name)
         @events ||= []
-        @events << name
-        # Rails.autoloaders.log!
-        # autoload :AppointmentEvents::Cancelled, 'appointment_events/cancelled'
+        @events << name.to_s
       end
     end
   end

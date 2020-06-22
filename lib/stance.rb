@@ -8,5 +8,5 @@ module Stance
 
   autoload :Events, 'stance/events'
   autoload :Event, 'stance/event'
-  autoload :EventConcern, 'stance/event_concern'
+  autoload :Eventable, 'stance/eventable'
 end

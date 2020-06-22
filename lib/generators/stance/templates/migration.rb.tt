@@ -3,6 +3,7 @@ class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version
     create_table :stance_event_records do |t|
       t.string :name
       t.<%= properties_type %> :metadata
+      t.belongs_to :subject, polymorphic: true
       t.timestamps
     end
   end

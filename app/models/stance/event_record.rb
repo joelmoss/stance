@@ -2,7 +2,7 @@
 
 module Stance
   class EventRecord < ActiveRecord::Base
-    include Stance::EventConcern
+    belongs_to :subject, polymorphic: true
 
     def self.table_name_prefix
       'stance_'
