@@ -3,6 +3,7 @@ PATH
   specs:
     stance (0.1.0)
       activerecord (>= 5)
+      multi_json
       railties (>= 5)
 
 GEM
@@ -57,6 +58,7 @@ GEM
       minitest (>= 4, < 6)
     minitest-server (1.0.6)
       minitest (~> 5.0)
+    multi_json (1.14.1)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     parallel (1.19.2)

@@ -1,6 +1,4 @@
-# Stance
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stance`. To experiment with that code, run `bin/console` for an interactive prompt.
+# Stance - Evented system for Rails apps.
 
 ```ruby
 class AppointmentEvents < Stance::Events
@@ -12,18 +10,18 @@ class AppointmentEvents < Stance::Events
   # Namespaced event
   event 'offers.create'
 
+  # Singleton event: only one event with this name can exist for the same subject.
+  event :my_event, singleton: true
+
   # Optionally, create a class for an event.
   class SomeEvent < Stance::Event
-    notify :client, :therapist do
-      dismissed_on :some_event, after: 2.hours
-      dismissable_by :client
+    # Return false if you do not want the event to be created.
+    def callable?
+      false
     end
-  end
 
-  class Offers::SomeEvent < Stance::Event
-    notify :client, :therapist do
-      dismissed_on :some_event, after: 2.hours
-      dismissable_by :client
+    def call
+      # do something when the event is created.
     end
   end
 end

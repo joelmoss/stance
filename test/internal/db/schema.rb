@@ -5,6 +5,7 @@ ActiveRecord::Schema.define do
     t.string :name
     t.string :subject_type
     t.integer :subject_id
+    t.datetime :dismissed_at
     t.text :metadata
     t.timestamps
   end

@@ -4,6 +4,7 @@ class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version
       t.string :name
       t.<%= properties_type %> :metadata
       t.belongs_to :subject, polymorphic: true
+      t.datetime :dismissed_at, index: true
       t.timestamps
     end
   end

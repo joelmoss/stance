@@ -5,9 +5,9 @@ module Stance
     class << self
       attr_reader :events
 
-      def event(name)
-        @events ||= []
-        @events << name.to_s
+      def event(name, options = {})
+        @events ||= {}
+        @events[name.to_s] = options
       end
     end
   end
