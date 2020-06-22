@@ -1,0 +1,9 @@
+class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :stance_event_records do |t|
+      t.string :name
+      t.<%= properties_type %> :metadata
+      t.timestamps
+    end
+  end
+end
