@@ -1,14 +1,14 @@
-# Stance - Evented system for Rails apps.
+# Stance - Simple Events for Rails apps
 
 ```ruby
 class AppointmentEvents < Stance::Events
   # Define events.
-  event :my_event, notify: :client
-  event :some_event, dismissed_on: :some_action, after: 2.hours
-  event :another_event
+  event :my_event
+  event :some_event
 
-  # Namespaced event
+  # Namespaced events
   event 'offers.create'
+  event 'offers.delete'
 
   # Singleton event: only one event with this name can exist for the same subject.
   event :my_event, singleton: true
@@ -26,11 +26,9 @@ class AppointmentEvents < Stance::Events
   end
 end
 
-# Publish event from the model
+# Publish events from the model
 Appointment.find(1).publish_event :some_event
-
-# MAYBE: Or for events that are not model backed.
-Evt.publish 'amazing_event'
+Appointment.find(1).publish_event 'offers.create'
 ```
 
 ## Installation
@@ -48,6 +46,11 @@ And then execute:
 Or install it yourself as:
 
     $ gem install stance
+
+Run the installer to generate the migration, and then run the migration:
+
+    $ rails g stance:install
+    $ rails db:migrate
 
 ## Usage
 

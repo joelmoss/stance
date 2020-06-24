@@ -35,6 +35,14 @@ module Stance
       name
     end
 
+    def event_class_name
+      @event_class_name ||= "#{subject.model_name.name}Events::#{name.tr('.', '/').classify}"
+    end
+
+    def event_class
+      @event_class ||= event_class_name.constantize
+    end
+
     def dismissed?
       dismissed_at.present?
     end
