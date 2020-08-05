@@ -10,7 +10,7 @@ class AppointmentEvents < Stance::Events
   event 'offers.create'
   event 'offers.delete'
 
-  # Singleton event: only one event with this name can exist for the same subject.
+  # Singleton event: only one active event with this name can exist for the same subject.
   event :my_event, singleton: true
 
   # Optionally, create a class for an event.
@@ -21,7 +21,7 @@ class AppointmentEvents < Stance::Events
     end
 
     def call
-      # do something when the event is created.
+      # do something when the event is created. You have access to the event `subject` and `record`.
     end
   end
 end
@@ -29,6 +29,7 @@ end
 # Publish events from the model
 Appointment.find(1).publish_event :some_event
 Appointment.find(1).publish_event 'offers.create'
+Appointment.find(1).publish_event :event_with_metadata, foo: :bah
 ```
 
 ## Installation
