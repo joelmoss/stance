@@ -21,7 +21,9 @@ module Stance
       event_class_name = "#{events_class_name}::#{name.to_s.tr('.', '/').classify}"
       ev = event_class(event_class_name).new(name, self, metadata, events_class.events[name])
 
-      ev.create
+      events_class.new(ev).run_callbacks :create do
+        ev.create
+      end
     end
 
     private

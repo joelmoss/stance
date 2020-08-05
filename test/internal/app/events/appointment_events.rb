@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class AppointmentEvents < Stance::Events
+  before_create do
+    event.record.metadata = event.record.metadata.merge(before_created: true)
+  end
+
   event :created
   event :cancelled
   event :deleted

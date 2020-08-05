@@ -32,7 +32,7 @@ module Stance
     def test_publish_event_with_metadata
       appointment.publish_event 'payment.expiring', name: 'Joel', 'last' => 'moss'
 
-      assert_equal({ name: 'Joel', 'last': 'moss' }.with_indifferent_access,
+      assert_equal({ name: 'Joel', 'last': 'moss', before_created: true }.with_indifferent_access,
                    appointment.events.last.metadata)
     end
 
@@ -42,7 +42,9 @@ module Stance
     end
 
     def test_aborted_callback
-      refute appointment.publish_event(:deleted).record.persisted?
+      event = appointment.publish_event(:deleted)
+      assert event.record.metadata[:before_created]
+      refute event.record.persisted?
     end
   end
 end

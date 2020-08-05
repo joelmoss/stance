@@ -14,5 +14,11 @@ module Stance
       assert_equal %w[created cancelled deleted payment.expiring singleton],
                    AppointmentEvents.events.keys
     end
+
+    def test_events_callback
+      appointment = Appointment.create
+
+      assert appointment.publish_event(:deleted).record.metadata[:before_created]
+    end
   end
 end
