@@ -13,20 +13,16 @@ class AppointmentEvents < Stance::Events
   # Singleton event: only one active event with this name can exist for the same subject.
   event :my_event, singleton: true
 
+  # Will be called before/after each event in this class. Have access to the event `subject` and
+  # `record`.
+  before_create :do_something_before
+  after_create :do_something_after
+
   # Optionally, create a class for an event.
   class SomeEvent < Stance::Event
-    # Define optional callbacks.
-    before_call :do_something_before
-    after_call :do_something_after
-
-    # Return false if you do not want the event to be created.
-    def callable?
-      false
-    end
-
-    def call
-      # do something when the event is created. You have access to the event `subject` and `record`.
-    end
+    # Define optional callbacks which have access to the `subject` and event `record`.
+    before_create :do_something_before
+    after_create :do_something_after
   end
 end
 
