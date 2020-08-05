@@ -21,9 +21,7 @@ module Stance
       event_class_name = "#{events_class_name}::#{name.to_s.tr('.', '/').classify}"
       ev = event_class(event_class_name).new(name, self, metadata, events_class.events[name])
 
-      Stance::EventRecord.transaction do
-        ev.valid? && ev.call
-      end
+      ev.create
     end
 
     private

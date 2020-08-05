@@ -13,14 +13,14 @@ module Stance
       assert_raises(Stance::EventNotFound) { appointment.publish_event(:nothing) }
     end
 
-    def test_publish_namespaced_event
-      assert appointment.publish_event('payment.expiring')
-      assert_equal 'Appointment.payment.expired event from class',
-                   appointment.publish_event('payment.expired')
+    def test_returns_event
+      assert_instance_of Stance::Event, appointment.publish_event(:created)
+      assert_instance_of Stance::Event, appointment.publish_event('payment.expiring')
     end
 
     def test_publish_event
-      assert_equal true, appointment.publish_event(:created)
+      appointment.publish_event :created
+
       assert_equal 'created', appointment.events.last.name
       assert_equal appointment, appointment.events.last.subject
     end
@@ -37,12 +37,12 @@ module Stance
     end
 
     def test_singleton_event
-      assert_equal true, appointment.publish_event(:singleton)
-      assert_equal false, appointment.publish_event(:singleton)
+      assert appointment.publish_event(:singleton).record.persisted?
+      refute appointment.publish_event(:singleton).record.persisted?
     end
 
-    def test_event_not_callable
-      assert_equal false, appointment.publish_event(:deleted)
+    def test_aborted_callback
+      refute appointment.publish_event(:deleted).record.persisted?
     end
   end
 end

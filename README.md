@@ -15,6 +15,10 @@ class AppointmentEvents < Stance::Events
 
   # Optionally, create a class for an event.
   class SomeEvent < Stance::Event
+    # Define optional callbacks.
+    before_call :do_something_before
+    after_call :do_something_after
+
     # Return false if you do not want the event to be created.
     def callable?
       false

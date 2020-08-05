@@ -2,29 +2,45 @@
 
 module Stance
   class Event
+    include ActiveSupport::Callbacks
+
+    define_callbacks :create
     attr_reader :record, :options
 
     delegate :subject, :name, to: :record
+
+    class << self
+      def before_create(*methods, &block)
+        set_callback :create, :before, *methods, &block
+      end
+
+      def after_create(*methods, &block)
+        set_callback :create, :after, *methods, &block
+      end
+    end
 
     def initialize(name, subject, metadata, options)
       @options = { singleton: false }.merge(options)
       @record = Stance::EventRecord.new(name: name, subject: subject, metadata: metadata)
     end
 
-    def valid?
-      # If event is a singleton, check there is no other active event with the same name. If there
-      # is, return false.
-      return false if options[:singleton] && subject.events.active.exists?(name: name)
+    def create
+      return self if singleton_exists?
 
-      callable? && record.save
+      Stance::EventRecord.transaction do
+        run_callbacks :create do
+          record.save
+        end
+      end
+
+      self
     end
 
-    def callable?
-      true
-    end
+    private
 
-    def call
-      true
+    # Event is a singleton and already exists.
+    def singleton_exists?
+      options[:singleton] && subject.events.active.exists?(name: name)
     end
   end
 end

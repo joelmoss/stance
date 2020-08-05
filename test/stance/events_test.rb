@@ -11,7 +11,7 @@ module Stance
       assert_nil Stance::Events.events
       assert_equal ['something'], SomeEvents.events.keys
       assert_nil NoEvents.events
-      assert_equal %w[created cancelled deleted payment.expiring payment.expired singleton],
+      assert_equal %w[created cancelled deleted payment.expiring singleton],
                    AppointmentEvents.events.keys
     end
   end

@@ -2,7 +2,8 @@
 
 class AppointmentEvents < Stance::Events
   class Cancelled < Stance::Event
-    def call
+    def create
+      super
       "#{subject.model_name}.#{record} event from class"
     end
   end
