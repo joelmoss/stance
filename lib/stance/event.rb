@@ -36,6 +36,10 @@ module Stance
       self
     end
 
+    def full_name
+      "#{subject.model_name.singular}.#{name}"
+    end
+
     private
 
     # Event is a singleton and already exists.
