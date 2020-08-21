@@ -6,6 +6,16 @@ require 'stance/engine'
 module Stance
   class EventNotFound < StandardError; end
 
+  mattr_accessor :disabled_events
+  @@disabled_events = []
+
+  def self.disable(*events)
+    disabled_events.concat events
+    yield
+  ensure
+    self.disabled_events -= events
+  end
+
   autoload :Events, 'stance/events'
   autoload :Event, 'stance/event'
   autoload :Eventable, 'stance/eventable'

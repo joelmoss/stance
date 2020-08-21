@@ -13,6 +13,12 @@ class AppointmentEvents < Stance::Events
 
   event :singleton, singleton: true
 
+  class Created < Stance::Event
+    before_create do
+      subject.update is_active: true
+    end
+  end
+
   class Deleted < Stance::Event
     before_create do
       throw :abort

@@ -14,7 +14,6 @@ module Stance
     end
 
     def test_returns_event
-      assert_instance_of Stance::Event, appointment.publish_event(:created)
       assert_instance_of Stance::Event, appointment.publish_event('payment.expiring')
     end
 
@@ -45,6 +44,14 @@ module Stance
       event = appointment.publish_event(:deleted)
       assert event.record.metadata[:before_created]
       refute event.record.persisted?
+    end
+
+    def test_disabling_events
+      Stance.disable 'appointment.created' do
+        appointment.do_create
+      end
+
+      refute appointment.is_active
     end
   end
 end
