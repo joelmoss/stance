@@ -1,6 +1,14 @@
-# Stance - Simple Events for Rails apps
+# Stance - Simple & Explicit Events for Rails apps
+
+## Usage
 
 ```ruby
+# Your model
+class Appointment < ActiveRecord::Base
+  include Stance::Eventable
+end
+
+# Define your events
 class AppointmentEvents < Stance::Events
   # Define events.
   event :my_event
@@ -33,6 +41,35 @@ end
 Appointment.find(1).publish_event :some_event
 Appointment.find(1).publish_event 'offers.create'
 Appointment.find(1).publish_event :event_with_metadata, foo: :bah
+```
+
+### ActiveRecord Callbacks
+
+Stance comes with a couple of opt-in modules to help ease your Callback spaghetti...
+
+```ruby
+class Appointment < ActiveRecord::Base
+  include Stance::Eventable
+  include Stance::ActiveRecordCallbacks
+end
+
+class AppointmentEvents < Stance::Events
+  include Stance::ActiveRecordEvents
+end
+
+# Now all your model callbacks will trigger an event of the same name, where any public methods
+# defined will be called.
+class AppointmentEvents::AfterCreate < Stance::Event
+  include Stance::ActiveRecordEvents
+
+  # This method will be called upon the :after_create callback of the Appointment model.
+  def do_something;end
+
+  private
+
+    # Private methods will not be called by the callback.
+    def my_private_method;end
+end
 ```
 
 ## Installation

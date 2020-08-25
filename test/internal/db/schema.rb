@@ -20,4 +20,9 @@ ActiveRecord::Schema.define do
     t.string :name
     t.timestamps
   end
+
+  create_table :posts do |t|
+    t.string :title
+    t.timestamps
+  end
 end

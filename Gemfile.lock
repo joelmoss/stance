@@ -58,6 +58,7 @@ GEM
       minitest (>= 4, < 6)
     minitest-server (1.0.6)
       minitest (~> 5.0)
+    mocha (1.11.2)
     multi_json (1.15.0)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -112,6 +113,7 @@ DEPENDENCIES
   minitest
   minitest-autotest
   minitest-focus
+  mocha
   rake (~> 12.0)
   rubocop
   sqlite3

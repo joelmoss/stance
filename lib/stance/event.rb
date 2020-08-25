@@ -27,8 +27,17 @@ module Stance
     def create
       return self if singleton_exists?
 
+      Rails.logger.info "Event: #{full_name}"
+
       Stance::EventRecord.transaction do
         run_callbacks :create do
+          # Call each public method of the Event class if a custom class.
+          if self.class.name != 'Stance::Event'
+            (public_methods(false) - Stance::Event.instance_methods(false)).each do |method|
+              send method
+            end
+          end
+
           record.save if @options[:record]
         end
       end

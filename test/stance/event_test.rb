@@ -57,5 +57,19 @@ module Stance
 
       refute appointment.is_active
     end
+
+    def test_public_method_event
+      Appointment.any_instance.stubs(:something).returns(true).once
+
+      assert appointment.publish_event(:after_create)
+    end
+
+    def test_active_record_events
+      assert_equal Stance::ActiveRecordCallbacks::CALLBACKS, PostEvents.events.symbolize_keys.keys
+
+      PostEvents::AfterCreate.any_instance.expects(:do_something).once
+
+      Post.create(title: 'My Post')
+    end
   end
 end

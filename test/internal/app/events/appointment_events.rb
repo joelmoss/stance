@@ -9,6 +9,7 @@ class AppointmentEvents < Stance::Events
   event :cancelled
   event :deleted
   event :norecord, record: false
+  event :after_create, record: false
 
   event 'payment.expiring'
 
@@ -23,6 +24,12 @@ class AppointmentEvents < Stance::Events
   class Deleted < Stance::Event
     before_create do
       throw :abort
+    end
+  end
+
+  class AfterCreate < Stance::Event
+    def do_something
+      subject.something
     end
   end
 end

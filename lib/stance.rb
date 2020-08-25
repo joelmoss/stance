@@ -19,4 +19,6 @@ module Stance
   autoload :Events, 'stance/events'
   autoload :Event, 'stance/event'
   autoload :Eventable, 'stance/eventable'
+  autoload :ActiveRecordCallbacks, 'stance/active_record_callbacks'
+  autoload :ActiveRecordEvents, 'stance/active_record_events'
 end
