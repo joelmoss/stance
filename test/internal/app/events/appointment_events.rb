@@ -8,6 +8,7 @@ class AppointmentEvents < Stance::Events
   event :created
   event :cancelled
   event :deleted
+  event :norecord, record: false
 
   event 'payment.expiring'
 

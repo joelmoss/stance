@@ -13,6 +13,9 @@ class AppointmentEvents < Stance::Events
   # Singleton event: only one active event with this name can exist for the same subject.
   event :my_event, singleton: true
 
+  # By default, events are recorded in the database, unless you set the `record` option to false,
+  event :my_recordless_event, record: true
+
   # Will be called before/after each event in this class. Have access to the event `subject` and
   # `record`.
   before_create :do_something_before

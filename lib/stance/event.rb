@@ -20,7 +20,7 @@ module Stance
     end
 
     def initialize(name, subject, metadata, options)
-      @options = { singleton: false }.merge(options)
+      @options = { singleton: false, record: true }.merge(options)
       @record = Stance::EventRecord.new(name: name, subject: subject, metadata: metadata)
     end
 
@@ -29,7 +29,7 @@ module Stance
 
       Stance::EventRecord.transaction do
         run_callbacks :create do
-          record.save
+          record.save if @options[:record]
         end
       end
 
