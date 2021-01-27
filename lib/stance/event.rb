@@ -20,8 +20,15 @@ module Stance
     end
 
     def initialize(name, subject, metadata, options)
-      @options = { singleton: false, record: true }.merge(options)
-      @record = Stance::EventRecord.new(name: name, subject: subject, metadata: metadata)
+      @options = { singleton: false, record: true, class: false }.merge(options)
+
+      attrs = { name: name, metadata: metadata }
+      if subject.is_a?(String)
+        attrs[:subject_type] = subject
+      else
+        attrs[:subject] = subject
+      end
+      @record = Stance::EventRecord.new(attrs)
     end
 
     def create
@@ -46,7 +53,7 @@ module Stance
     end
 
     def full_name
-      "#{subject.model_name.singular}.#{name}"
+      "#{record.subject_type.downcase}.#{name}"
     end
 
     private

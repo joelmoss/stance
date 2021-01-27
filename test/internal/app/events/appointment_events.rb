@@ -13,6 +13,7 @@ class AppointmentEvents < Stance::Events
 
   event 'payment.expiring'
 
+  event :class_event, class: true
   event :singleton, singleton: true
 
   class Created < Stance::Event

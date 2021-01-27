@@ -36,7 +36,7 @@ module Stance
     end
 
     def event_class_name
-      @event_class_name ||= "#{subject.model_name.name}Events::#{name.tr('.', '/').classify}"
+      @event_class_name ||= "#{subject_type}Events::#{name.tr('.', '/').classify}"
     end
 
     def event_class

@@ -22,7 +22,10 @@ class AppointmentEvents < Stance::Events
   event :my_event, singleton: true
 
   # By default, events are recorded in the database, unless you set the `record` option to false,
-  event :my_recordless_event, record: true
+  event :my_recordless_event, record: false
+
+  # You can define a class event, which is published on the class instead of the instance.
+  event :my_class_event, class: true
 
   # Will be called before/after each event in this class. Have access to the event `subject` and
   # `record`.
@@ -41,6 +44,7 @@ end
 Appointment.find(1).publish_event :some_event
 Appointment.find(1).publish_event 'offers.create'
 Appointment.find(1).publish_event :event_with_metadata, foo: :bah
+Appointment.publish_event :my_class_event
 ```
 
 ### ActiveRecord Callbacks

@@ -64,6 +64,12 @@ module Stance
       assert appointment.publish_event(:after_create)
     end
 
+    def test_class_event
+      event = Appointment.publish_event(:class_event)
+
+      assert_equal 'Appointment', event.record.subject_type
+    end
+
     def test_active_record_events
       assert_equal Stance::ActiveRecordCallbacks::CALLBACKS, PostEvents.events.symbolize_keys.keys
 
