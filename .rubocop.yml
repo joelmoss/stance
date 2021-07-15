@@ -5,4 +5,6 @@ Style/Documentation:
 Layout/LineLength:
   Max: 100
 Metrics/MethodLength:
-  Max: 12
+  Max: 15
+Style/ClassVars:
+  Enabled: false
