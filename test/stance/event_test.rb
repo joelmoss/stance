@@ -31,7 +31,7 @@ module Stance
     def test_publish_event_with_metadata
       appointment.publish_event 'payment.expiring', name: 'Joel', 'last' => 'moss'
 
-      assert_equal({ name: 'Joel', 'last': 'moss', before_created: true }.with_indifferent_access,
+      assert_equal({ name: 'Joel', last: 'moss', before_created: true }.with_indifferent_access,
                    appointment.events.last.metadata)
     end
 
@@ -73,7 +73,9 @@ module Stance
     def test_active_record_events
       assert_equal Stance::ActiveRecordCallbacks::CALLBACKS, PostEvents.events.symbolize_keys.keys
 
+      PostEvents::AfterInitialize.any_instance.expects(:do_something).once
       PostEvents::AfterCreate.any_instance.expects(:do_something).once
+      PostEvents::AfterCreateCommit.any_instance.expects(:do_something).once
 
       Post.create(title: 'My Post')
     end
