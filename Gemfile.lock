@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stance (0.5.1)
+    stance (0.5.2)
       activerecord (>= 5)
       multi_json
       railties (>= 5)
