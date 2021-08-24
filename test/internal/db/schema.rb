@@ -25,4 +25,9 @@ ActiveRecord::Schema.define do
     t.string :title
     t.timestamps
   end
+
+  create_table :post_comments do |t|
+    t.string :comment
+    t.timestamps
+  end
 end
