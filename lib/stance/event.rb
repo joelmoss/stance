@@ -5,9 +5,7 @@ module Stance
     include ActiveSupport::Callbacks
 
     define_callbacks :create
-    attr_reader :record, :options
-
-    delegate :subject, :name, to: :record
+    attr_reader :record, :options, :name
 
     class << self
       def before_create(*methods, &block)
@@ -20,14 +18,22 @@ module Stance
     end
 
     def initialize(name, subject, metadata, options)
+      @subject = subject
+      @name = name
+      @metadata = metadata
       @options = { singleton: false, record: true, class: false }.merge(options)
 
       attrs = { name: name, metadata: metadata }
-      if subject.is_a?(String)
-        attrs[:subject_type] = subject
-      else
+      if subject.is_a?(ActiveRecord::Base)
         attrs[:subject] = subject
+      elsif subject.is_a?(Class) && subject < ActiveRecord::Base
+        attrs[:subject_type] = subject.name
+      else
+        @options[:record] = false
       end
+
+      return unless @options[:record]
+
       @record = Stance::EventRecord.new(attrs)
     end
 
@@ -40,9 +46,7 @@ module Stance
           if self.class.name != 'Stance::Event'
             Rails.logger.info "Event: #{full_name}"
 
-            (public_methods(false) - Stance::Event.instance_methods(false)).each do |method|
-              send method
-            end
+            callback_methods.each { |method| send method }
           end
 
           record.save if @options[:record]
@@ -53,10 +57,18 @@ module Stance
     end
 
     def full_name
-      "#{record.subject_type.downcase}.#{name}"
+      "#{subject.class.name.downcase}.#{name}"
+    end
+
+    def subject
+      try(:record)&.subject || @subject
     end
 
     private
+
+    def callback_methods
+      public_methods(false) - Stance::Event.instance_methods(false)
+    end
 
     # Event is a singleton and already exists.
     def singleton_exists?

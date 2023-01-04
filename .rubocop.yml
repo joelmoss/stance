@@ -8,3 +8,5 @@ Metrics/MethodLength:
   Max: 15
 Style/ClassVars:
   Enabled: false
+Metrics/AbcSize:
+  Max: 20

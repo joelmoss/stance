@@ -41,7 +41,7 @@ module Stance
     end
 
     def test_event_without_record
-      refute appointment.publish_event(:norecord).record.persisted?
+      refute appointment.publish_event(:norecord).record
     end
 
     def test_aborted_callback
@@ -77,10 +77,10 @@ module Stance
       PostEvents::AfterCreate.any_instance.expects(:do_something).once
       PostEvents::AfterCreateCommit.any_instance.expects(:do_something).once
 
-      Post.create(title: 'My Post')
+      Post.create title: 'My Post'
 
       Post::CommentEvents::BeforeCreate.any_instance.expects(:do_something).once
-      Post::Comment.create(comment: 'awesome!')
+      Post::Comment.create comment: 'awesome!'
     end
   end
 end

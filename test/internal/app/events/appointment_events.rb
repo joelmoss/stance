@@ -2,7 +2,7 @@
 
 class AppointmentEvents < Stance::Events
   before_create do
-    event.record.metadata = event.record.metadata.merge(before_created: true)
+    event.record.metadata = event.record.metadata.merge(before_created: true) if event.record
   end
 
   event :created

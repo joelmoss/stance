@@ -4,7 +4,9 @@ require 'stance/version'
 require 'stance/engine'
 
 module Stance
-  class EventNotFound < StandardError; end
+  class Error < StandardError; end
+  class EventNotFound < Error; end
+  class DuplicateEvent < Error; end
 
   mattr_accessor :disabled_events
   @@disabled_events = []

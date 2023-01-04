@@ -9,11 +9,21 @@ module Stance
     define_callbacks :create
 
     class << self
-      attr_reader :events
+      attr_accessor :events
+
+      def inherited(child)
+        @events ||= {}
+        child.events ||= @events.dup
+        super
+      end
 
       def event(name, options = {})
         @events ||= {}
-        @events[name.to_s] = options
+        sname = name.to_s
+
+        raise DuplicateEvent, "Cannot redefine event :#{sname} on #{self}" if @events.key?(sname)
+
+        @events[sname] = options
       end
 
       def before_create(*methods, &block)
