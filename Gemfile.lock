@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    stance (0.7.1)
-      multi_json
-      rails (>= 7.0.4)
+    stance (0.8.0)
+      multi_json (~> 1.15)
+      rails (~> 7.0.4)
 
 GEM
   remote: https://rubygems.org/
