@@ -57,7 +57,7 @@ module Stance
           if self.class.name != 'Stance::Event'
             Rails.logger.debug "Event: #{full_name}"
 
-            self.class.callback_methods.each { |method| send method }
+            self.class.callback_methods&.each { |method| send method }
           end
 
           record.save if @options[:record]

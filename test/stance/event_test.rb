@@ -83,7 +83,6 @@ module Stance
       Post::Comment.create comment: 'awesome!'
     end
 
-    focus
     def test_callback_order
       Post::Comment.create! comment: 'awesome!'
     end

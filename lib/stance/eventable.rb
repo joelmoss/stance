@@ -16,8 +16,6 @@ module Stance
         name = name.to_s
         subject.ensure_event! name
 
-        return unless subject.event_class(name)
-
         # Find the Event class - if any - and initialize it. Falls back to Stance::Event.
         ev = subject.event_class(name)
                     .new(name, subject, metadata, subject.events_class.events[name])
@@ -40,6 +38,12 @@ module Stance
 
       def events_class_name
         @events_class_name ||= "#{name}Events"
+      end
+
+      def event_class(name)
+        name.constantize
+      rescue NameError
+        Stance::Event
       end
     end
 
@@ -69,7 +73,9 @@ module Stance
 
     # The class which defines the event. There will be only one.
     def event_class(name)
-      "#{events_class_name}::#{name.tr('.', '/').classify}".safe_constantize
+      "#{events_class_name}::#{name.tr('.', '/').classify}".constantize
+    rescue NameError
+      Stance::Event
     end
   end
 end
