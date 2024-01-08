@@ -85,7 +85,7 @@ module Stance
 
     focus
     def test_callback_order
-      Post::Comment.create comment: 'awesome!'
+      Post::Comment.create! comment: 'awesome!'
     end
   end
 end
