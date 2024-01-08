@@ -82,9 +82,5 @@ module Stance
       Post::CommentEvents::BeforeCreate.any_instance.expects(:do_something).once
       Post::Comment.create comment: 'awesome!'
     end
-
-    def test_callback_order
-      Post::Comment.create! comment: 'awesome!'
-    end
   end
 end

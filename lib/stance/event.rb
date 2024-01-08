@@ -19,9 +19,9 @@ module Stance
       end
 
       def method_added(method_name)
-        return if self == Stance::Event
+        super
 
-        puts "Adding #{self}##{method_name.inspect}"
+        return if self == Stance::Event
 
         self.callback_methods ||= []
         self.callback_methods << method_name
