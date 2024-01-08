@@ -8,12 +8,23 @@ module Stance
     attr_reader :record, :options, :name
 
     class << self
+      attr_accessor :callback_methods
+
       def before_create(*methods, &block)
         set_callback :create, :before, *methods, &block
       end
 
       def after_create(*methods, &block)
         set_callback :create, :after, *methods, &block
+      end
+
+      def method_added(method_name)
+        super
+
+        return if self == Stance::Event
+
+        self.callback_methods ||= []
+        self.callback_methods << method_name
       end
     end
 
@@ -44,9 +55,9 @@ module Stance
         run_callbacks :create do
           # Call each public method of the Event class if a custom class.
           if self.class.name != 'Stance::Event'
-            Rails.logger.info "Event: #{full_name}"
+            Rails.logger.debug "Event: #{full_name}"
 
-            callback_methods.each { |method| send method }
+            self.class.callback_methods&.each { |method| send method }
           end
 
           record.save if @options[:record]
@@ -65,10 +76,6 @@ module Stance
     end
 
     private
-
-    def callback_methods
-      public_methods(false) - Stance::Event.instance_methods(false)
-    end
 
     # Event is a singleton and already exists.
     def singleton_exists?

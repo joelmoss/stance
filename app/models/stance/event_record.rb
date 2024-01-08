@@ -56,7 +56,7 @@ module Stance
     end
 
     unless connection.adapter_name =~ /postg|mysql/i
-      serialize :metadata, ::JSONWithIndifferentAccess
+      serialize :metadata, coder: ::JSONWithIndifferentAccess
     end
   end
 end

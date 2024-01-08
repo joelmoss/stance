@@ -7,6 +7,7 @@ gemspec
 
 gem 'autotest-suffix'
 gem 'combustion'
+gem 'debug'
 gem 'minitest'
 gem 'minitest-autotest'
 gem 'minitest-focus'
