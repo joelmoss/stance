@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'multi_json', '~> 1.15'
-  spec.add_dependency 'rails', '~> 7.0.4'
+  spec.add_dependency 'rails', ['>= 7.0', '< 8.0']
 end

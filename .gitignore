@@ -6,5 +6,5 @@
 /pkg/
 /spec/reports/
 /tmp/
-/test/internal/db/*.sqlite
+/test/internal/db/*.sqlite*
 .DS_Store
