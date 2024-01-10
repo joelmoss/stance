@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stance (0.8.2)
+    stance (0.8.3)
       multi_json (~> 1.15)
       rails (>= 7.0, < 8.0)
 
