@@ -21,7 +21,7 @@ module Stance
       def method_added(method_name)
         super
 
-        return if self == Stance::Event
+        return if self == Stance::Event || !instance_methods(false).include?(method_name)
 
         self.callback_methods ||= []
         self.callback_methods << method_name
