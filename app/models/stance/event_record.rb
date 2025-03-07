@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
-require 'multi_json'
-
 class JSONWithIndifferentAccess
   def self.load(str)
     return str unless str
 
-    obj = HashWithIndifferentAccess.new(MultiJson.load(str))
+    obj = HashWithIndifferentAccess.new(JSON.parse(str))
     obj.freeze
     obj
   end
 
   def self.dump(obj)
-    MultiJson.dump(obj)
+    JSON.dump(obj)
   end
 end
 
