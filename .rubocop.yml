@@ -7,6 +7,8 @@ AllCops:
   NewCops: enable
   Exclude:
     - gemfiles/*
+    - "test/internal/node_modules/**/*"
+    - "test/internal/vendor/**/*"
 
 Style/Documentation:
   Enabled: false
