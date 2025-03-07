@@ -10,12 +10,12 @@ module Stance
     class << self
       attr_accessor :callback_methods
 
-      def before_create(*methods, &block)
-        set_callback :create, :before, *methods, &block
+      def before_create(*methods, &)
+        set_callback(:create, :before, *methods, &)
       end
 
-      def after_create(*methods, &block)
-        set_callback :create, :after, *methods, &block
+      def after_create(*methods, &)
+        set_callback(:create, :after, *methods, &)
       end
 
       def method_added(method_name)
@@ -34,7 +34,7 @@ module Stance
       @metadata = metadata
       @options = { singleton: false, record: true, class: false }.merge(options)
 
-      attrs = { name: name, metadata: metadata }
+      attrs = { name:, metadata: }
       if subject.is_a?(ActiveRecord::Base)
         attrs[:subject] = subject
       elsif subject.is_a?(Class) && subject < ActiveRecord::Base
@@ -79,7 +79,7 @@ module Stance
 
     # Event is a singleton and already exists.
     def singleton_exists?
-      options[:singleton] && subject.events.active.exists?(name: name)
+      options[:singleton] && subject.events.active.exists?(name:)
     end
   end
 end

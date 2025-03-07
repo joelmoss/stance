@@ -13,7 +13,7 @@ module Stance
 
       def copy_migration
         migration_template 'migration.rb', 'db/migrate/create_stance_event_record.rb',
-                           migration_version: migration_version
+                           migration_version:
       end
 
       def migration_version

@@ -26,12 +26,12 @@ module Stance
         @events[sname] = options
       end
 
-      def before_create(*methods, &block)
-        set_callback :create, :before, *methods, &block
+      def before_create(*methods, &)
+        set_callback(:create, :before, *methods, &)
       end
 
-      def after_create(*methods, &block)
-        set_callback :create, :after, *methods, &block
+      def after_create(*methods, &)
+        set_callback(:create, :after, *methods, &)
       end
     end
 

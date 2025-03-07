@@ -36,8 +36,8 @@ module Stance
     end
 
     def test_singleton_event
-      assert appointment.publish_event(:singleton).record.persisted?
-      refute appointment.publish_event(:singleton).record.persisted?
+      assert_predicate appointment.publish_event(:singleton).record, :persisted?
+      refute_predicate appointment.publish_event(:singleton).record, :persisted?
     end
 
     def test_event_without_record
@@ -46,8 +46,9 @@ module Stance
 
     def test_aborted_callback
       event = appointment.publish_event(:deleted)
+
       assert event.record.metadata[:before_created]
-      refute event.record.persisted?
+      refute_predicate event.record, :persisted?
     end
 
     def test_disabling_events

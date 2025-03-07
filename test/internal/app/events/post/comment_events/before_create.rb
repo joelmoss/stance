@@ -1,7 +1,13 @@
-class Post::CommentEvents::BeforeCreate < Stance::Event
-  def do_something; end
+# frozen_string_literal: true
 
-  private
+class Post
+  class CommentEvents
+    class BeforeCreate < Stance::Event
+      def do_something; end
 
-  def private_method; end
+      private
+
+      def private_method; end
+    end
+  end
 end

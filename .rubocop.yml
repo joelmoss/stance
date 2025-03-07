@@ -1,14 +1,25 @@
+require:
+  - rubocop-minitest
+  - rubocop-rake
+
 AllCops:
   TargetRubyVersion: 3.2.0
   NewCops: enable
+  Exclude:
+    - gemfiles/*
 
 Style/Documentation:
   Enabled: false
-Layout/LineLength:
-  Max: 100
-Metrics/MethodLength:
-  Max: 15
 Style/ClassVars:
   Enabled: false
+
+Layout/LineLength:
+  Max: 100
+
+Metrics/MethodLength:
+  Max: 15
 Metrics/AbcSize:
   Max: 20
+
+Minitest/MultipleAssertions:
+  Enabled: false

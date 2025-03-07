@@ -10,9 +10,9 @@ module Stance
     class MoreInheritedEvents < InheritedEvents; event :something_more; end
 
     def test_events_variable
-      assert_equal({}, Stance::Events.events)
+      assert_empty(Stance::Events.events)
       assert_equal ['something'], SomeEvents.events.keys
-      assert_equal({}, NoEvents.events)
+      assert_empty(NoEvents.events)
       assert_equal %w[created cancelled deleted norecord after_create payment.expiring class_event
                       singleton], AppointmentEvents.events.keys
     end
