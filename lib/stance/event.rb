@@ -21,7 +21,7 @@ module Stance
       def method_added(method_name)
         super
 
-        return if self == Stance::Event || !instance_methods(false).include?(method_name)
+        return if self == Stance::Event || !method_defined?(method_name, false)
 
         self.callback_methods ||= []
         self.callback_methods << method_name
@@ -57,7 +57,9 @@ module Stance
           if self.class.name != 'Stance::Event'
             Rails.logger.debug "Event: #{full_name}"
 
-            self.class.callback_methods&.each { |method| send method }
+            self.class.callback_methods&.each do |method|
+              send method if public_methods(false).include?(method)
+            end
           end
 
           record.save if @options[:record]

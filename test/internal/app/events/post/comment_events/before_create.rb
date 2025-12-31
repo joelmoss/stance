@@ -7,7 +7,9 @@ class Post
 
       private
 
-      def private_method; end
+      def private_method
+        raise
+      end
     end
   end
 end

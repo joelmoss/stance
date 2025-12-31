@@ -60,7 +60,9 @@ module Stance
     end
 
     def test_public_method_event
+      Appointment.any_instance.stubs(:before_something).returns(true).once
       Appointment.any_instance.stubs(:something).returns(true).once
+      Appointment.any_instance.stubs(:after_something).returns(true).once
 
       assert appointment.publish_event(:after_create)
     end
