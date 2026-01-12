@@ -64,16 +64,12 @@ module Stance
     end
 
     def events_class
-      @events_class ||= events_class_name.constantize
-    end
-
-    def events_class_name
-      @events_class_name ||= "#{self.class.name}Events"
+      @events_class ||= self.class.events_class_name.constantize
     end
 
     # The class which defines the event. There will be only one.
     def event_class(name)
-      "#{events_class_name}::#{name.tr('.', '/').classify}".constantize
+      "#{self.class.events_class_name}::#{name.tr('.', '/').classify}".constantize
     rescue NameError
       Stance::Event
     end
